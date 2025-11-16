@@ -2,7 +2,6 @@
 include 'header.php'; 
 ?>
 
-<!-- SLOGAN DAN GAMBAR RUMAH SAKIT -->
     <div class="hero-container">
         <div class="container text-white d-flex flex-column justify-content-center h-100">
             <h1 class="display-3 fw-bold">Peduli, Profesional, dan Penuh Kasih</h1>
@@ -10,7 +9,6 @@ include 'header.php';
         </div>
     </div>
 
-    <!-- maps rs maonise -->
      <section class="container py-5">
     <div class="row align-items-center g-5">
         
@@ -299,8 +297,6 @@ include 'header.php';
             </div>
         </div>
     </div>
-
-    <!-- chatbot mengambang -->
 
 
 <?php 
