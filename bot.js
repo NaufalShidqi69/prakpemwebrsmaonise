@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-    // === 1. DEFINISI PERTANYAAN & JAWABAN (Sama seperti sebelumnya) ===
+    // === 1. DEFINISI PERTANYAAN & JAWABAN (Sama) ===
     const faqData = {
         'q1': { 'pertanyaan': 'Jam operasional rumah sakit?', 'jawaban': 'UGD kami siap melayani 24 jam. Untuk Poliklinik (Rawat Jalan), jam operasional normal adalah Senin - Sabtu, pukul 08:00 - 21:00.' },
         'q2': { 'pertanyaan': 'Di mana lokasi RS Maonise?', 'jawaban': 'Kami berlokasi di Jl. Sehat Selalu No. 123, Yogyakarta. Anda bisa menemukan kami di Google Maps dengan kata kunci "RS Maonise".' },
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
         'q15': { 'pertanyaan': 'Bagaimana cara menghubungi Humas?', 'jawaban': 'Untuk pertanyaan umum, keluhan, atau informasi lainnya, Anda dapat menghubungi bagian Informasi kami di (0274) 123-456 atau email ke info@Maonise.com.' }
     };
 
-    // === 2. AMBIL ELEMEN HTML ===
+    // === 2. AMBIL ELEMEN HTML (Sama) ===
     const botToggle = document.getElementById('bot-toggle');
     const botWindow = document.getElementById('bot-window');
     const botClose = document.getElementById('bot-close');
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     let isBotOpen = false;
 
-    // === 3. FUNGSI-FUNGSI CHAT (Sama seperti sebelumnya) ===
+    // === 3. FUNGSI-FUNGSI CHAT (Sama) ===
 
     function scrollToBottom() {
         chatArea.scrollTop = chatArea.scrollHeight;
@@ -45,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         `;
         chatArea.appendChild(messageWrapper);
-        scrollToBottom();
     }
 
     function appendUserMessage(text) {
@@ -57,23 +56,17 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         `;
         chatArea.appendChild(messageWrapper);
-        scrollToBottom();
     }
 
-    // --- FUNGSI INI KITA MODIFIKASI ---
     function showQuestionOptions() {
         const questionsContainer = document.createElement('div');
         questionsContainer.className = 'bot-questions-container';
 
         for (const key in faqData) {
             const button = document.createElement('button');
-            // Kita tambahkan class 'bot-question-btn' untuk identifikasi
             button.className = 'btn btn-outline-primary bot-question-btn';
             button.innerHTML = faqData[key].pertanyaan;
             button.setAttribute('data-key', key);
-            
-            // !!! KITA HAPUS event listener dari sini !!!
-            
             questionsContainer.appendChild(button);
         }
         
@@ -87,21 +80,26 @@ document.addEventListener("DOMContentLoaded", function() {
         // 1. Hapus opsi pertanyaan lama
         const oldQuestions = chatArea.querySelector('.bot-questions-container');
         if (oldQuestions) {
-            // Hapus bubble chat yang berisi tombol-tombol
             oldQuestions.closest('.bot-message').remove();
         }
 
-        // 2. Tampilkan pertanyaan user sebagai chat user
+        // 2. Tampilkan pertanyaan user
         appendUserMessage(qText);
+        scrollToBottom(); // Scroll setelah user kirim
 
         // 3. Tampilkan jawaban bot
         setTimeout(() => {
             appendBotMessage(aText);
+            scrollToBottom(); // Scroll setelah bot jawab
 
             // 4. Tampilkan pertanyaan "Ada lagi?" dan opsi lagi
             setTimeout(() => {
                 appendBotMessage("Ada lagi yang bisa saya bantu? Silakan pilih topik lain di bawah ini.");
+                scrollToBottom(); // Scroll lagi
+                
                 showQuestionOptions();
+                
+                // scrollToBottom(); // <-- INILAH PERUBAHANNYA, BARIS INI DIHAPUS
             }, 1000);
 
         }, 500);
@@ -111,9 +109,10 @@ document.addEventListener("DOMContentLoaded", function() {
         chatArea.innerHTML = ''; 
         appendBotMessage("Halo! Saya Maonise Bot. Ada yang bisa saya bantu? Silakan pilih salah satu pertanyaan di bawah ini.");
         showQuestionOptions();
+        chatArea.scrollTop = 0; 
     }
 
-    // === 4. EVENT LISTENERS UNTUK BUKA/TUTUP (Sama) ===
+    // === 4. EVENT LISTENERS (Sama) ===
     
     function toggleBot() {
         if (isBotOpen) {
@@ -134,21 +133,13 @@ document.addEventListener("DOMContentLoaded", function() {
     botToggle.addEventListener('click', toggleBot);
     botClose.addEventListener('click', toggleBot);
 
-
-    // === 5. INI ADALAH PERBAIKANNYA (EVENT DELEGATION) ===
-    // Kita menempelkan SATU listener ke 'chatArea'
+    // === 5. EVENT DELEGATION (Sama) ===
     
     chatArea.addEventListener('click', function(event) {
-        // 'event.target' adalah elemen yang DIKLIK (bisa jadi teks di dalam tombol)
-        // '.closest()' akan mencari elemen terdekat yang cocok dengan '.bot-question-btn'
-        
         const clickedButton = event.target.closest('.bot-question-btn');
-
-        // Jika yang diklik adalah tombol (bukan area lain)
         if (clickedButton) {
             const key = clickedButton.getAttribute('data-key');
             if (key) {
-                // Panggil fungsi handle
                 handleQuestionClick(key);
             }
         }
