@@ -1,132 +1,94 @@
+<!-- ====== FOOTER BARU (SESUAI GAMBAR) ====== -->
+    <footer class="bg-primary text-white pt-5 pb-4"> <!-- Diubah dari bg-dark ke bg-primary agar cocok dengan header -->
+        <div class="container">
+            <!-- Baris untuk 5 kolom link -->
+            <div class="row g-4 row-cols-2 row-cols-md-3 row-cols-lg-5">
+                
+                <!-- Kolom 1: Tentang Kami -->
+                <div class="col">
+                    <h6 class="fw-bold mb-3">Tentang Kami</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Overview</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">History</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Pencapaian</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Hubungan Investor</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Program CSR</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kolom 2: Untuk Pasien -->
+                <div class="col">
+                    <h6 class="fw-bold mb-3">Untuk Pasien</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="fasilitas.php" class="text-white text-decoration-none opacity-75 hover-opacity-100">Pusat Unggulan</a></li>
+                        <li class="mb-2"><a href="konsul.php" class="text-white text-decoration-none opacity-75 hover-opacity-100">Telekonsultasi</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kolom 3: Untuk Perusahaan -->
+                <div class="col">
+                    <h6 class="fw-bold mb-3">Untuk Perusahaan</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Laporan Keuangan</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Laporan Tahunan</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Corporate Governance</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kolom 4: Untuk Profesional -->
+                <div class="col">
+                    <h6 class="fw-bold mb-3">Untuk Profesional</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Pusat Pelatihan</a></li>
+                        <li class="mb-2"><a href="dokter.php" class="text-white text-decoration-none opacity-75 hover-opacity-100">Pusat Unggulan</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Karir</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kolom 5: Ayo Terhubung -->
+                <div class="col">
+                    <h6 class="fw-bold mb-3">Ayo Terhubung dengan Kami</h6>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white fs-4 hover-opacity-100 opacity-75"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="text-white fs-4 hover-opacity-100 opacity-75"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-white fs-4 hover-opacity-100 opacity-75"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white fs-4 hover-opacity-100 opacity-75"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Garis Pemisah & Copyright -->
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.2);"> 
+
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center small">
+                <p class="text-white-50 mb-3 mb-sm-0">© Copyright 2025, RS Maonise. All Rights Reserved.</p>
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item"><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Syarat dan Ketentuan</a></li>
+                    <li class="list-inline-item">|</li>
+                    <li class="list-inline-item"><a href="#" class="text-white text-decoration-none opacity-75 hover-opacity-100">Kebijakan Privasi</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
 <?php
-// 1. Memanggil file header.php (CSS, Menu, Koneksi, dll sudah ada di sini)
-include 'header.php';
+// INI BAGIAN BARU: Panggil file bot
+// File bot.php sendiri yang akan memutuskan kapan harus tampil
+include 'bot.php';
 ?>
+    <!-- ====== END FOOTER ====== -->
 
-<div class="container py-5">
-    <div class="row mb-4">
-        <div class="col text-center">
-            <h1 class="display-4 fw-bold">Fasilitas & Ruang Rawat Inap</h1>
-            <p class="lead text-muted">Kami menyediakan fasilitas terbaik untuk kenyamanan dan kesembuhan Anda.</p>
-        </div>
-    </div>
 
-    <h2 class="pb-2 border-bottom mb-4">Ruang Rawat Inap</h2>
-    
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <!-- ======================================================== -->
+    <!-- ==== URUTAN SCRIPT YANG BENAR (PENTING!) ==== -->
+    <!-- =Failure to provide the `integrity` attribute for scripts or styles loaded from a CDN (like Bootstrap) poses a security risk, as it prevents the browser from verifying that the file hasn't been maliciously altered. This vulnerability, known as a Supply Chain Attack, could allow attackers to inject and execute arbitrary code within the context of the user's session, leading to potential data theft, session hijacking, or other malicious activities. It is crucial to always include the `integrity` attribute with the correct hash value when loading resources from third-party sources.================================================ -->
 
-        <div class="col">
-            <div class="card h-100 shadow-sm border-0 news-card-new">
-                <img src="https://rumahsakitislam.com/images/2023/07/07/vip-anyarrr-1.jpg" class="card-img-top news-card-img-new" alt="Kamar VIP">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">Kamar VIP / VVIP</h5>
-                    <p class="card-text text-muted small">Kenyamanan dan privasi eksklusif dengan pelayanan penuh.</p>
-                    <ul class="list-unstyled text-muted small mt-3">
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>1 Tempat Tidur Pasien</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Sofa & Meja Tamu</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>TV Kabel 42 inch</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Kulkas & Microwave</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Kamar Mandi Dalam (Air Panas)</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <!-- 1. WAJIB Bootstrap JS (dari CDN) - 'xintegrity' SUDAH DIPERBAIKI -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
-        <div class="col">
-            <div class="card h-100 shadow-sm border-0 news-card-new">
-                <img src="https://rskasihibu.com/wp-content/uploads/2025/02/DSC04926c-654x436.jpg" class="card-img-top news-card-img-new" alt="Kamar Kelas 1">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">Kamar Kelas 1</h5>
-                    <p class="card-text text-muted small">Solusi ideal untuk kenyamanan dengan fasilitas lengkap.</p>
-                    <ul class="list-unstyled text-muted small mt-3">
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>2 Tempat Tidur Pasien</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Kursi Tamu</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>TV Kabel 32 inch</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Kamar Mandi Dalam</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <!-- 2. BARU script.js kustom Anda (yang bergantung pada Bootstrap) -->
+    <script src="js/script.js"></script>
 
-        <div class="col">
-            <div class="card h-100 shadow-sm border-0 news-card-new">
-                <img src="https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=800&q=80" class="card-img-top news-card-img-new" alt="Kamar Kelas 2">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">Kamar Kelas 2 & 3</h5>
-                    <p class="card-text text-muted small">Perawatan berkualitas dengan biaya yang terjangkau.</p>
-                    <ul class="list-unstyled text-muted small mt-3">
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>3-4 Tempat Tidur Pasien</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Nakas di setiap tempat tidur</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Kamar Mandi Bersama</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div> <h2 class="pb-2 border-bottom my-5">Fasilitas Penunjang Medis & Umum</h2>
-    
-    <div class="row g-4 py-3 row-cols-1 row-cols-md-2 row-cols-lg-3">
-
-        <div class="col text-center">
-            <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 rounded-3 p-3">
-                <i class="bi bi-heart-pulse"></i>
-            </div>
-            <div>
-                <h4 class="fw-bold mb-1">Unit Gawat Darurat (UGD)</h4>
-                <p class="text-muted small">Siap 24 jam dengan tim medis profesional dan peralatan lengkap.</p>
-            </div>
-        </div>
-
-        <div class="col text-center">
-            <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 rounded-3 p-3">
-                <i class="bi bi-eyedropper"></i>
-            </div>
-            <div>
-                <h4 class="fw-bold mb-1">Laboratorium</h4>
-                <p class="text-muted small">Pemeriksaan patologi, mikrobiologi, dan tes darah yang akurat.</p>
-            </div>
-        </div>
-
-        <div class="col text-center">
-            <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 rounded-3 p-3">
-                <i class="bi bi-person-bounding-box"></i>
-            </div>
-            <div>
-                <h4 class="fw-bold mb-1">Radiologi & Pencitraan</h4>
-                <p class="text-muted small">Didukung teknologi X-Ray, CT-Scan, dan MRI terbaru.</p>
-            </div>
-        </div>
-
-        <div class="col text-center">
-            <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 rounded-3 p-3">
-                <i class="bi bi-capsule-pill"></i>
-            </div>
-            <div>
-                <h4 class="fw-bold mb-1">Farmasi / Apotek</h4>
-                <p class="text-muted small">Menyediakan obat-obatan lengkap dan resep 24 jam.</p>
-            </div>
-        </div>
-
-        <div class="col text-center">
-            <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 rounded-3 p-3">
-                <i class="bi bi-cup-straw"></i>
-            </div>
-            <div>
-                <h4 class="fw-bold mb-1">Kantin & Kafetaria</h4>
-                <p class="text-muted small">Menyediakan makanan sehat dan higienis untuk pasien dan keluarga.</p>
-            </div>
-        </div>
-
-        <div class="col text-center">
-            <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 rounded-3 p-3">
-                <i class="bi bi-p-circle-fill"></i>
-            </div>
-            <div>
-                <h4 class="fw-bold mb-1">Area Parkir Luas</h4>
-                <p class="text-muted small">Area parkir yang aman dan memadai untuk kenyamanan pengunjung.</p>
-            </div>
-        </div>
-
-    </div> </div> <?php
-// 2. Memanggil file footer.php (Script JS, penutup </body>, </html> ada di sini)
-include 'footer.php';
-?>
+</body>
+</html>
