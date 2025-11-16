@@ -1,19 +1,5 @@
 <?php
-
-$servername = "localhost";
-$username = "root";       
-$password = "";            
-$dbname = "project_akhir";   
-
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-
-if ($conn->connect_error) {
-    die("Koneksi database gagal: " . $conn->connect_error);
-}
-
-
+include 'koneksi.php';
 $obatList = [];
 $sql = "SELECT nama, deskripsi, gambar_url FROM tb_apotek";
 $result = $conn->query($sql);
