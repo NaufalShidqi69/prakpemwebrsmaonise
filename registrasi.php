@@ -9,8 +9,8 @@ $success_message = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $nama_lengkap = mysqli_real_escape_string($conn, $_POST['nama_lengkap']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $nama_lengkap = mysqli_real_escape_string($koneksi, $_POST['nama_lengkap']);
+    $email = mysqli_real_escape_string($koneksi, $_POST['email']);
     $password = $_POST['password'];
     $konfirmasi_password = $_POST['konfirmasi_password'];
     $kode_admin = $_POST['kode_admin'];
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error_message = "Format email tidak valid.";
     } 
     else {
-        $stmt_check = $conn->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt_check = $koneksi->prepare("SELECT id FROM users WHERE email = ?");
         $stmt_check->bind_param("s", $email);
         $stmt_check->execute();
         $stmt_check->store_result();
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $role = 'admin';
             }
 
-            $stmt_insert = $conn->prepare("INSERT INTO users (nama_lengkap, email, password, role) VALUES (?, ?, ?, ?)");
+            $stmt_insert = $koneksi->prepare("INSERT INTO users (nama_lengkap, email, password, role) VALUES (?, ?, ?, ?)");
             $stmt_insert->bind_param("ssss", $nama_lengkap, $email, $password_hash, $role);
 
             if ($stmt_insert->execute()) {
@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         $stmt_check->close();
     }
-    $conn->close();
+    $koneksi->close();
 }
 ?>
 
