@@ -1,39 +1,41 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+// 1. PERBAIKAN: Cek session 'role' yang diatur oleh login.php
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
     header('Location: login.php');
     exit;
 }
 
-include 'koneksi.php'; 
+include 'koneksi.php'; // Pastikan ini 'koneksi.php' (sesuai file login)
 
+// Ganti nama koneksi ke '$koneksi' agar konsisten
 $total_dokter = 0;
 $total_obat = 0;
 $total_berita = 0;
 $total_users = 0;
 
-$result_dokter = $conn->query("SELECT COUNT(*) as total FROM tb_dokter");
+$result_dokter = $koneksi->query("SELECT COUNT(*) as total FROM tb_dokter");
 if ($result_dokter) {
     $total_dokter = $result_dokter->fetch_assoc()['total'];
 }
 
-$result_obat = $conn->query("SELECT COUNT(*) as total FROM tb_apotek");
+$result_obat = $koneksi->query("SELECT COUNT(*) as total FROM tb_apotek");
 if ($result_obat) {
     $total_obat = $result_obat->fetch_assoc()['total'];
 }
 
-$result_berita = $conn->query("SELECT COUNT(*) as total FROM tb_berita");
+$result_berita = $koneksi->query("SELECT COUNT(*) as total FROM tb_berita");
 if ($result_berita) {
     $total_berita = $result_berita->fetch_assoc()['total'];
 }
 
-$result_users = $conn->query("SELECT COUNT(*) as total FROM users");
+$result_users = $koneksi->query("SELECT COUNT(*) as total FROM users");
 if ($result_users) {
     $total_users = $result_users->fetch_assoc()['total'];
 }
 
-$conn->close();
+$koneksi->close();
 
 ?>
 
@@ -157,8 +159,8 @@ $conn->close();
         <div class="header">
             <div>
                 <h1>Dashboard</h1>
-                <?php if(isset($_SESSION['nama_admin'])): ?>
-                    <h3>Selamat Datang, <?php echo htmlspecialchars($_SESSION['nama_admin']); ?>!</h3>
+                <?php if(isset($_SESSION['nama_user'])): ?>
+                    <h3>Selamat Datang, <?php echo htmlspecialchars($_SESSION['nama_user']); ?>!</h3>
                 <?php endif; ?>
             </div>
             <a href="logout.php" class="logout-btn">Logout</a>
