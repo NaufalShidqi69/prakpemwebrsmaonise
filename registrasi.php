@@ -1,42 +1,30 @@
 <?php
-// Mulai session untuk menyimpan pesan
 session_start();
-// Panggil file koneksi
 include 'koneksi.php';
 
-// Tentukan Kode Admin Rahasia Anda
-// Ganti 'ADMIN_RAHASIA_123' dengan kode apa pun yang Anda inginkan
 define('SECRET_ADMIN_CODE', 'ADMIN_RAHASIA_123');
 
-// Siapkan variabel untuk pesan error/sukses
 $error_message = '';
 $success_message = '';
 
-// Cek apakah form sudah di-submit (method POST)
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // 1. Ambil data dari form (dan amankan)
     $nama_lengkap = mysqli_real_escape_string($conn, $_POST['nama_lengkap']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = $_POST['password']; // Kita ambil password mentah dulu
+    $password = $_POST['password'];
     $konfirmasi_password = $_POST['konfirmasi_password'];
-    $kode_admin = $_POST['kode_admin']; // Ambil kode admin
+    $kode_admin = $_POST['kode_admin'];
 
-    // 2. Validasi Input
     if (empty($nama_lengkap) || empty($email) || empty($password) || empty($konfirmasi_password)) {
         $error_message = "Semua bidang (kecuali Kode Admin) wajib diisi.";
     } 
-    // Cek apakah password cocok
     elseif ($password !== $konfirmasi_password) {
         $error_message = "Password dan Konfirmasi Password tidak cocok.";
     } 
-    // Cek apakah email valid
     elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error_message = "Format email tidak valid.";
     } 
-    // Cek apakah email sudah ada
     else {
-        // Gunakan prepared statement untuk keamanan
         $stmt_check = $conn->prepare("SELECT id FROM users WHERE email = ?");
         $stmt_check->bind_param("s", $email);
         $stmt_check->execute();
@@ -45,26 +33,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt_check->num_rows > 0) {
             $error_message = "Email ini sudah terdaftar. Silakan gunakan email lain.";
         } else {
-            // 3. Semua validasi lolos, proses registrasi
-
-            // Hash password (SANGAT PENTING!)
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-            // Tentukan Role (Admin atau Pengguna)
-            $role = 'pengguna'; // Default adalah 'pengguna'
+            $role = 'pengguna';
             
-            // Cek apakah user memasukkan kode admin yang benar
             if (!empty($kode_admin) && $kode_admin === SECRET_ADMIN_CODE) {
                 $role = 'admin';
             }
 
-            // 4. Masukkan data ke database (Gunakan Prepared Statement)
             $stmt_insert = $conn->prepare("INSERT INTO users (nama_lengkap, email, password, role) VALUES (?, ?, ?, ?)");
-            // "ssss" berarti 4 variabel berikutnya adalah string
             $stmt_insert->bind_param("ssss", $nama_lengkap, $email, $password_hash, $role);
 
             if ($stmt_insert->execute()) {
-                // Jika sukses, kirim pesan sukses via session dan arahkan ke login
                 $_SESSION['register_success'] = "Registrasi berhasil! Akun Anda sebagai '$role' telah dibuat. Silakan login.";
                 header("Location: login.php");
                 exit;
