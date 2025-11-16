@@ -1,30 +1,23 @@
 <?php
-// --- 1. MULAI SESSION & KONEKSI ---
-// session_start() harus diletakkan di baris paling atas
 session_start();
 include 'koneksi.php';
 
-// Siapkan variabel
 $error_message = '';
 $success_message = '';
 
-// Cek apakah ada pesan sukses dari halaman registrasi
 if (isset($_SESSION['register_success'])) {
     $success_message = $_SESSION['register_success'];
-    // Hapus session agar tidak muncul lagi saat di-refresh
     unset($_SESSION['register_success']);
 }
 
-// Cek apakah user sudah login, jika ya, arahkan
 if (isset($_SESSION['admin_logged_in'])) {
     header("Location: indexadmin.php");
     exit;
 } elseif (isset($_SESSION['user_logged_in'])) {
-    header("Location: index.php"); // Ganti 'index.php' jika nama beranda user Anda beda
+    header("Location: index.php"); 
     exit;
 }
 
-// --- 2. PROSES FORM JIKA DI-SUBMIT ---
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if (empty($_POST['email']) || empty($_POST['password'])) {
@@ -33,51 +26,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        // --- 3. KEAMANAN: GUNAKAN PREPARED STATEMENT ---
-        // Ambil data user dari database berdasarkan email
         $stmt = $conn->prepare("SELECT id, nama_lengkap, email, password, role FROM users WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        // Cek apakah email ditemukan
         if ($result->num_rows === 1) {
             $user = $result->fetch_assoc();
 
-            // --- 4. KEAMANAN: VERIFIKASI PASSWORD HASH ---
             if (password_verify($password, $user['password'])) {
-                // Password benar, login berhasil
                 
-                // --- 5. LOGIKA ROLE (ADMIN / PENGGUNA) ---
                 if ($user['role'] == 'admin') {
-                    // Jika dia ADMIN
                     $_SESSION['admin_logged_in'] = true;
                     $_SESSION['id_admin'] = $user['id'];
                     $_SESSION['nama_admin'] = $user['nama_lengkap'];
                     $_SESSION['role'] = 'admin';
                     
-                    // Arahkan ke dashboard admin
                     header("Location: indexadmin.php");
                     exit;
                     
                 } elseif ($user['role'] == 'pengguna') {
-                    // Jika dia PENGGGUNA BIASA
                     $_SESSION['user_logged_in'] = true;
                     $_SESSION['id_user'] = $user['id'];
                     $_SESSION['nama_user'] = $user['nama_lengkap'];
                     $_SESSION['role'] = 'pengguna';
                     
-                    // Arahkan ke beranda pengguna (misal: index.php)
-                    header("Location: index.php"); // Ganti 'index.php' jika perlu
+                    header("Location: index.php"); 
                     exit;
                 }
                 
             } else {
-                // Password salah
                 $error_message = "Email atau password salah.";
             }
         } else {
-            // Email tidak ditemukan
             $error_message = "Email atau password salah.";
         }
         $stmt->close();
@@ -103,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         .login-card {
             width: 100%;
-            max-width: 400px; /* Sedikit lebih kecil dari registrasi */
+            max-width: 400px; 
             padding: 30px;
             border-radius: 12px;
             background-color: white;
