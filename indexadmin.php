@@ -1,15 +1,13 @@
 <?php
 session_start();
 
-// 1. PERBAIKAN: Cek session 'role' yang diatur oleh login.php
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
     header('Location: login.php');
     exit;
 }
 
-include 'koneksi.php'; // Pastikan ini 'koneksi.php' (sesuai file login)
+include 'koneksi.php'; 
 
-// Ganti nama koneksi ke '$koneksi' agar konsisten
 $total_dokter = 0;
 $total_obat = 0;
 $total_berita = 0;
@@ -36,114 +34,114 @@ if ($result_users) {
 }
 
 $koneksi->close();
-
 ?>
-
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            background-color: #f4f7f6;
+            background-color: #f4f7fa;
             display: flex;
         }
-
         .sidebar {
             width: 250px;
-            background-color: #2c3e50;
+            background-color: #343a40;
             color: white;
-            height: 100vh;
+            min-height: 100vh;
             padding: 20px;
-            box-sizing: border-box;
         }
         .sidebar h2 {
             text-align: center;
-            color: #ecf0f1;
+            color: #ffffff;
             margin-bottom: 30px;
         }
         .sidebar ul {
-            list-style-type: none;
+            list-style: none;
             padding: 0;
-            margin: 0;
         }
         .sidebar ul li {
-            margin: 15px 0;
+            margin-bottom: 10px;
         }
         .sidebar ul li a {
+            color: #adb5bd;
             text-decoration: none;
-            color: #ecf0f1;
-            font-size: 18px;
             display: block;
             padding: 10px 15px;
             border-radius: 5px;
-            transition: background-color 0.3s;
+            transition: background 0.3s;
         }
-        .sidebar ul li a.active,
-        .sidebar ul li a:hover {
-            background-color: #3498db;
+        .sidebar ul li a:hover,
+        .sidebar ul li a.active {
+            background-color: #495057;
+            color: white;
         }
-
         .main-content {
             flex-grow: 1;
-            padding: 20px;
+            padding: 30px;
         }
-
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
         }
         .header h1 {
             margin: 0;
-            font-size: 28px;
+            font-size: 2.5rem;
         }
-        .header .logout-btn {
-            text-decoration: none;
-            background-color: #e74c3c;
+        .header h3 {
+            margin: 0;
+            font-weight: normal;
+            font-size: 1.2rem;
+            color: #555;
+        }
+        .logout-btn {
+            background-color: #dc3545;
             color: white;
-            padding: 8px 15px;
+            padding: 10px 15px;
+            text-decoration: none;
             border-radius: 5px;
             font-weight: bold;
-            transition: background-color 0.3s;
         }
-        .header .logout-btn:hover {
-            background-color: #c0392b;
+        .logout-btn:hover {
+            background-color: #c82333;
         }
-
+        
+        /* CSS KHUSUS DASHBOARD */
         .dashboard-stats {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
         }
         .stat-box {
-            background-color: white;
+            background-color: #ffffff;
             padding: 25px;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             text-align: center;
         }
         .stat-box h2 {
-            margin: 0;
-            font-size: 36px;
-            color: #3498db;
+            margin: 0 0 10px 0;
+            font-size: 3rem;
+            color: #007bff;
         }
         .stat-box p {
-            margin: 5px 0 0 0;
-            font-size: 16px;
+            margin: 0;
+            font-size: 1.1rem;
             color: #555;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-
+    
     <div class="sidebar">
         <h2>Admin Panel</h2>
         <ul>
