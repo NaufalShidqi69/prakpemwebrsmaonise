@@ -1,20 +1,16 @@
 <?php
-// FILE INI SUDAH BENAR DAN AMAN.
-// TIDAK PERLU DIUBAH.
 
 session_start();
-include 'koneksi.php'; // Pastikan nama file ini 'koneksi.php'
+include 'koneksi.php'; 
 
 $error_message = '';
 $success_message = '';
 
-// 1. Menampilkan pesan sukses jika baru mendaftar
 if (isset($_SESSION['register_success'])) {
     $success_message = $_SESSION['register_success'];
     unset($_SESSION['register_success']);
 }
 
-// 2. Cek jika sudah login, langsung arahkan
 if (isset($_SESSION['role'])) {
     if ($_SESSION['role'] == 'admin') {
         header("Location: indexadmin.php");
@@ -31,12 +27,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST['email']) || empty($_POST['password'])) {
         $error_message = "Email dan Password wajib diisi.";
     } else {
-        // Ganti nama variabel koneksi jika berbeda (misal: $conn)
+        
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        // 3. Gunakan Prepared Statements (Aman dari SQL Injection)
-        // Pastikan nama tabelnya 'users'
+        
         $stmt = $koneksi->prepare("SELECT id, nama_lengkap, email, password, role FROM users WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -45,13 +40,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result->num_rows === 1) {
             $user = $result->fetch_assoc();
 
-            // 4. Verifikasi Password (PENTING)
-            // Ini akan mengecek password yang di-hash
             if (password_verify($password, $user['password'])) {
                 
-                // 5. Cek Role dan buat Session
+                
                 if ($user['role'] == 'admin') {
-                    $_SESSION['id_user'] = $user['id']; // Gunakan ID yang konsisten
+                    $_SESSION['id_user'] = $user['id']; 
                     $_SESSION['nama_user'] = $user['nama_lengkap'];
                     $_SESSION['role'] = 'admin';
                     
