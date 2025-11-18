@@ -53,8 +53,6 @@ include 'header.php';
     </div>
 </section>
 
-    <!-- layanan unggulan rumah sakit  -->
-
     <div class="container px-4 py-5" id="layanan-unggulan">
     
         <h2 class="pb-2 border-bottom text-center fw-bold display-5">Layanan Unggulan Kami</h2>
@@ -102,7 +100,6 @@ include 'header.php';
         </div>
     </div>
 
-    <!-- Berita terkini rumah sakit -->
 
     <div class="news-section py-5">
         <div class="container">
@@ -186,7 +183,6 @@ include 'header.php';
         </div>
     </div>
 
-    <!-- kalkulator hitung detak jantung -->
 
     <section class="calculator-section py-5">
         <div class="container">
