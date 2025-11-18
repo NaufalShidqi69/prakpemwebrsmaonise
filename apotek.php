@@ -1,247 +1,124 @@
 <?php
-include 'koneksi.php';
+include 'header.php';
+
 $obatList = [];
+
 $sql = "SELECT nama, deskripsi, gambar_url FROM tb_apotek";
-$result = $conn->query($sql);
+$result = $koneksi->query($sql);
 
 if ($result->num_rows > 0) {
-    
     while($row = $result->fetch_assoc()) {
         $obatList[] = $row;
     }
 } else {
-    echo "Tidak ada data obat ditemukan.";
+    echo "<div class='container my-5'><p class='text-center text-muted'>Tidak ada data obat ditemukan.</p></div>";
 }
-$conn->close();
 ?>
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apotek Online (dari Database)</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr); 
-            gap: 20px; 
-        }
-
-        
-        .card {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .card h3 {
-            margin: 0;
-            color: #0056b3;
-           
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        
-        .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.6);
-            padding-top: 60px;
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-            border-radius: 10px;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        
-       
-        #modalGambar {
-            width: 100%; 
-            max-width: 300px; 
-            display: block;
-            margin: 15px auto;
-            border-radius: 8px;
-        }
-        
-       
-        .lokasi {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
-        }
-        
-        .lokasi h4 {
-            margin: 0 0 10px 0;
-        }
-        
-        #modalLokasi {
-            font-weight: bold;
-            color: #28a745;
-        }
-    </style>
-</head>
-<body>
-
-    <h1>Daftar Obat Resep Anda</h1>
-
-    <div class="grid-container">
-        <?php foreach ($obatList as $obat): ?>
-            <div class="card" 
-                 data-nama="<?php echo htmlspecialchars($obat['nama']); ?>" 
-                 data-deskripsi="<?php echo htmlspecialchars($obat['deskripsi']); ?>"
-                 data-gambar="<?php echo htmlspecialchars($obat['gambar_url']); ?>" 
-            >
-                <h3><?php echo htmlspecialchars($obat['nama']); ?></h3>
-            </div>
-        <?php endforeach; ?>
-    </div>
-
-    <div id="obatModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="modalNama">Nama Obat</h2>
-            
-            <img id="modalGambar" src="" alt="Gambar Obat">
-            
-            <p id="modalDeskripsi">Deskripsi akan muncul di sini.</p>
-            
-            <div class="lokasi">
-                <h4>Lokasi Apotek Terdekat:</h4>
-                <p id="modalLokasi">Mencari lokasi...</p>
-            </div>
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col text-center">
+            <h1 class="display-4 fw-bold">Apotek Online</h1>
+            <p class="lead text-muted">Daftar obat yang tersedia di RS Maonise.</p>
         </div>
     </div>
 
-    <script>
-        
-        var modal = document.getElementById("obatModal");
-        var modalNama = document.getElementById("modalNama");
-        var modalDeskripsi = document.getElementById("modalDeskripsi");
-        var modalLokasi = document.getElementById("modalLokasi");
-        var modalGambar = document.getElementById("modalGambar");
-        var spanClose = document.getElementsByClassName("close")[0];
-        var cards = document.querySelectorAll(".card");
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5 g-4">
+        <?php if (!empty($obatList)): ?>
+            <?php foreach ($obatList as $obat): ?>
+                <div class="col">
+                    <div class="card h-100 shadow-sm apotek-card" 
+                         data-nama="<?php echo htmlspecialchars($obat['nama']); ?>"
+                         data-deskripsi="<?php echo htmlspecialchars($obat['deskripsi']); ?>"
+                         data-gambar="<?php echo htmlspecialchars($obat['gambar_url']); ?>">
+                        
+                        <img src="<?php echo htmlspecialchars($obat['gambar_url']); ?>" 
+                             class="card-img-top" 
+                             alt="<?php echo htmlspecialchars($obat['nama']); ?>" 
+                             style="aspect-ratio: 1/1; object-fit: cover;">
+                        
+                        <div class="card-body text-center">
+                            <h5 class="card-title fs-6 fw-bold">
+                                <?php echo htmlspecialchars($obat['nama']); ?>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+</div>
 
-        var daftarNamaApotek = [
-            'Apotek Sehat Selalu',
-            'Kimia Farma',
-            'Apotek K-24',
-            'Guardian Pharmacy',
-            'Apotek Century',
-            'Watsons'
+<div id="myModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalNama"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="modalGambar" src="" alt="Gambar Obat" class="img-fluid rounded mb-3" style="display: none; max-height: 300px; margin: auto;">
+                <p id="modalDeskripsi"></p>
+                <hr>
+                <p class="mb-0"><strong>Lokasi Apotek Terdekat:</strong></p>
+                <p id="modalLokasi" class="text-muted"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var modalElement = document.getElementById('myModal');
+    var myModal = new bootstrap.Modal(modalElement);
+    
+    var modalNama = document.getElementById('modalNama');
+    var modalDeskripsi = document.getElementById('modalDeskripsi');
+    var modalGambar = document.getElementById('modalGambar');
+    var modalLokasi = document.getElementById('modalLokasi');
+
+    var cards = document.querySelectorAll('.apotek-card');
+
+    function simulasiLokasiApotek() {
+        var lokasi = [
+            { nama: "Apotek Maonise Utama", jarak: "500m" },
+            { nama: "Apotek Maonise Cab. Melati", jarak: "1.2km" },
+            { nama: "Apotek Maonise Cab. Anggrek", jarak: "2.5km" }
         ];
+        return lokasi[Math.floor(Math.random() * lokasi.length)];
+    }
 
-      
-        function simulasiLokasiApotek() {
-          
-            var indexAcak = Math.floor(Math.random() * daftarNamaApotek.length);
-            var namaApotek = daftarNamaApotek[indexAcak];
+    cards.forEach(function(card) {
+        card.addEventListener("click", function() {
+            var nama = card.getAttribute("data-nama");
+            var deskripsi = card.getAttribute("data-deskripsi");
+            var gambar = card.getAttribute("data-gambar"); 
 
+            modalNama.textContent = nama;
+            modalDeskripsi.textContent = deskripsi;
             
-            var jarakAngka = Math.random(); 
-            var jarakString = "";
-            if (jarakAngka < 0.2) {
-                jarakString = "<200 m";
-            } else if (jarakAngka < 0.6) {
-                jarakString = "<600 m";
+            if (gambar && gambar !== "") {
+                modalGambar.src = gambar;         
+                modalGambar.style.display = "block"; 
             } else {
-                jarakString = (jarakAngka * 2).toFixed(1) + " km"; 
+                modalGambar.src = "";             
+                modalGambar.style.display = "none";  
             }
-           
-            return {
-                nama: namaApotek,
-                jarak: jarakString
-            };
-        }
-
-       
-        cards.forEach(function(card) {
-            card.addEventListener("click", function() {
-               
-                var nama = card.getAttribute("data-nama");
-                var deskripsi = card.getAttribute("data-deskripsi");
-                var gambar = card.getAttribute("data-gambar"); 
-
-              
-                modalNama.textContent = nama;
-                modalDeskripsi.textContent = deskripsi;
-                
-               
-                if (gambar && gambar !== "") {
-                    modalGambar.src = gambar;         
-                    modalGambar.style.display = "block"; 
-                } else {
-                    modalGambar.src = "";             
-                    modalGambar.style.display = "none";  
-                }
-                
-                modal.style.display = "block";
-                
-                modalLokasi.textContent = "Mencari...";
-                setTimeout(function() {
-                    var lokasiApotek = simulasiLokasiApotek(); 
-                    modalLokasi.textContent = lokasiApotek.nama + " (sekitar " + lokasiApotek.jarak + ")";
-                }, 1000); 
-            });
+            
+            myModal.show();
+            
+            modalLokasi.textContent = "Mencari...";
+            setTimeout(function() {
+                var lokasiApotek = simulasiLokasiApotek(); 
+                modalLokasi.textContent = lokasiApotek.nama + " (sekitar " + lokasiApotek.jarak + ")";
+            }, 1000); 
         });
+    });
+});
+</script>
 
-        spanClose.onclick = function() {
-            modal.style.display = "none";
-        }
-       
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
 
-</body>
-</html>
+<?php
+include 'footer.php';
+?>
