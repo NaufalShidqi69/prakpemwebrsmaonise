@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $_SESSION['nama_user'] = $user['nama_lengkap'];
                     $_SESSION['role'] = 'pengguna';
                     
-                    header("Location: index.php"); 
+                    header("Location: indexuser.php"); 
                     exit;
                 }
                 
