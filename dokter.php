@@ -1,6 +1,5 @@
 <?php 
 // 1. Memanggil file header.php
-// (File ini sudah otomatis memanggil koneksi.php dan memulai sesi)
 include 'header.php'; 
 ?>
 
@@ -15,17 +14,16 @@ include 'header.php';
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
         <?php
-        // 1. Buat SQL query untuk mengambil semua data dokter
-        // Diurutkan berdasarkan Nama Dokter A-Z
+        // 1. Buat SQL query
         $sql = "SELECT * FROM tb_dokter ORDER BY nama_dokter ASC";
         
-        // 2. Jalankan query (variabel $koneksi sudah ada dari header.php)
+        // 2. Jalankan query
         $result = $koneksi->query($sql);
 
-        // 3. Cek jika ada data yang ditemukan
+        // 3. Cek data
         if ($result && $result->num_rows > 0) {
             
-            // 4. Looping (ulangi) data selagi masih ada
+            // 4. Looping data
             while ($row = $result->fetch_assoc()) {
         ?>
 
@@ -48,7 +46,6 @@ include 'header.php';
                     
                     <p class="card-text text-muted small">
                         <?php 
-                        // Potong deskripsi jika terlalu panjang (lebih dari 100 karakter)
                         $deskripsi = htmlspecialchars($row['deskripsi']);
                         if (strlen($deskripsi) > 100) {
                             echo substr($deskripsi, 0, 100) . "...";
@@ -58,21 +55,24 @@ include 'header.php';
                         ?>
                     </p>
                     
-                    <a href="login.php" class="btn btn-primary mt-auto">
+                    <a href="konsul.php?dokter=<?php echo urlencode($row['nama_dokter']); ?>" class="btn btn-primary mt-auto">
                         Buat Janji Temu
                     </a>
                 </div>
             </div>
         </div>
+
         <?php 
-            } // Ini adalah penutup dari "while loop"
+            } 
         } else {
-            // Tampilkan ini jika tidak ada data dokter di tabel
             echo "<div class='col-12'><p class='text-center text-muted'>Belum ada data dokter untuk ditampilkan.</p></div>";
         }
         ?>
 
-    </div> </div> <?php 
+    </div> 
+</div> 
+
+<?php 
 // 2. Memanggil file footer.php
 include 'footer.php'; 
 ?>
